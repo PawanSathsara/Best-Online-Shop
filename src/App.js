@@ -1,4 +1,13 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+
+//Components:
+import HeaderComponent from "./components/HeaderComponent";
+import FooterComponent from "./components/FooterComponent";
+
+//User Components:
+import RoutesWithUserChatComponent from "./components/user/RoutesWithUserChatComponent";
+
+//Publicly Available Pages:
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
@@ -6,6 +15,7 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ProductListPage from "./pages/ProductListPage";
 import RegisterPage from "./pages/RegisterPage";
 import PageNotFoundPage from "./pages/PageNotFoundPage";
+
 import ProtectedRoutesComponent from "./components/ProtectedRoutesComponent";
 
 //Protected User Pages:
@@ -29,23 +39,28 @@ function App() {
   return (
     
     <BrowserRouter>
+      <HeaderComponent />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/product-details" element={<ProductDetailsPage />} />
-        <Route path="/product-details/:id" element={<ProductDetailsPage />} />
-        <Route path="/product-list" element={<ProductListPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="*" element={<PageNotFoundPage />} />
-
-        {/* User Protected Routes */}
-        <Route element={<ProtectedRoutesComponent admin={false} />} >
-          <Route path="/user" element={<UserProfilePage />} />
-          <Route path="/user/my-orders" element={<UserOrdersPage />} />
-          <Route path="/user/order-details" element={<UserOrderDetailsPage />} />
-          <Route path="/user/cart-details" element={<UserCartDetailsPage />} />
+        <Route element={<RoutesWithUserChatComponent />} >
+          {/* publicly available routes: */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/product-details" element={<ProductDetailsPage />} />
+          <Route path="/product-details/:id" element={<ProductDetailsPage />} />
+          <Route path="/product-list" element={<ProductListPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="*" element={<PageNotFoundPage />} />
         </Route>
+        
+          {/* User Protected Routes */}
+          <Route element={<ProtectedRoutesComponent admin={false} />} >
+            <Route path="/user" element={<UserProfilePage />} />
+            <Route path="/user/my-orders" element={<UserOrdersPage />} />
+            <Route path="/user/order-details" element={<UserOrderDetailsPage />} />
+            <Route path="/user/cart-details" element={<UserCartDetailsPage />} />
+          </Route>
+        
 
         {/* Admin Protected Routes */}
         <Route element={<ProtectedRoutesComponent admin={true}/>} >
@@ -60,6 +75,7 @@ function App() {
           <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
         </Route>
       </Routes>
+      <FooterComponent />
     </BrowserRouter>
     
   );
